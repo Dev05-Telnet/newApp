@@ -272,6 +272,14 @@ def remove_user():
     return flask.Response('Deleted', status=204)
 
 
+@app.route('/allusersdata')
+def allUsers():
+    storeuser = StoreUser.query.all()
+    context = dict()
+    context['storeuser'] = storeuser
+    return render('allusers.html', context)
+
+
 #
 # App interface
 #

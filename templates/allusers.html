@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+    <body>
+      <h1>All Users</h1>
+
+      <hr/>
+      <h2>Store Users</h2>
+      <ul>
+        {% for s in storeuser %}
+          <li>
+              {{s.id}} &mdash; {{s.user.email}} &mdash; {{s.user_id}} &mdash; {{s.store.store_id}} &mdash; {{s.admin}}
+          </li>
+        {% endfor %}
+      </ul>
+
+      <hr/>
+
+    </body>
+</html>
