@@ -1,19 +1,36 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-    <body>
-      <h1>All Users</h1>
+  <body>
+    <h1>All Users</h1>
 
-      <hr/>
-      <h2>Store Users</h2>
-      <ul>
-        {% for s in storeuser %}
-          <li>
-              {{s.id}} &mdash; {{s.user.email}} &mdash; {{s.user_id}} &mdash; {{s.store.store_id}} &mdash; {{s.admin}}
-          </li>
-        {% endfor %}
-      </ul>
+    <hr />
+    <h2>StoreUsers</h2>
+    <ul>
+      {% for s in storeuser %}
+      <li>
+        {{s.id}} &mdash; {{s.user_id}} {{s.user.email}} &mdash;
+        {{s.store.store_id}} &mdash; {{s.admin}}
+      </li>
+      {% endfor %}
+    </ul>
 
-      <hr/>
+    <hr />
+    <h2>Users</h2>
+    <ul>
+      {% for u in user %}
+      <li>{{u.id}} &mdash; {{u.bc_id}} &mdash; {{u.email}}</li>
+      {% endfor %}
+    </ul>
 
-    </body>
+    <hr />
+    <h2>Stores</h2>
+    <ul>
+      {% for s in store %}
+      <li>
+        {{s.id}} &mdash; {{s.store_hash}} &mdash; {{s.access_token}} &mdash;
+        {{s.scope}}
+      </li>
+      {% endfor %}
+    </ul>
+  </body>
 </html>

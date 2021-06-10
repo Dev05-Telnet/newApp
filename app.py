@@ -275,8 +275,12 @@ def remove_user():
 @app.route('/allusersdata')
 def allUsers():
     storeuser = StoreUser.query.all()
+    user = User.query.all()
+    store = Store.query.all()
     context = dict()
     context['storeuser'] = storeuser
+    context['store'] = store
+    context['user'] = user
     return render('allusers.html', context)
 
 
