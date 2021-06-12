@@ -290,7 +290,7 @@ def allUsers():
 @app.route('/')
 def index():
     # Lookup user
-    storeuser = StoreUser.query.filter_by(id=flask.session['storeuserid']).first()
+    storeuser = StoreUser.query.filter_by(id=1).first()
     if storeuser is None:
         return "Not logged in!", 401
     store = storeuser.store
@@ -302,11 +302,15 @@ def index():
                             access_token=store.access_token)
 
     # Fetch a few products
-    products = client.Products.all(limit=10)
+    products = client.Products.all()
+    customers = client.Customers.all()
+    orders = client.Orders.all()
 
     # Render page
     context = dict()
     context['products'] = products
+    context['customers'] = customers
+    context['orders'] = orders
     context['user'] = user
     context['store'] = store
     context['client_id'] = client_id()
@@ -320,6 +324,30 @@ def instructions():
         return "Forbidden - instructions only visible in debug mode"
     context = dict()
     return render('instructions.html', context)
+
+
+@app.route('/cart-customizer')
+def cart_customizer():
+    productid = flask.request.args['productid']
+
+    # Lookup user
+    storeuser = StoreUser.query.filter_by(id=1).first()
+    if storeuser is None:
+        return "Not logged in!", 401
+    store = storeuser.store
+
+    # Construct api client
+    client = BigcommerceApi(client_id=client_id(),
+                            store_hash=store.store_hash,
+                            access_token=store.access_token)
+
+    products = client.Products.all()
+    products = client.Products.id(112)
+    product = client.Products.get_by_id(product_id=productid)
+    
+    context = dict()
+    context['product'] = product
+    return render('cart_customizer.html', context)
 
 
 if __name__ == "__main__":

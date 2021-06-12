@@ -1,41 +1,93 @@
-<!doctype html>
-<html>
-    <body>
-      <h1>Welcome {{user.email}}!</h1>
+<!DOCTYPE html>
+<html lang="en">
 
-      <hr/>
-      <h2>Client ID</h2>
-      <pre>{{client_id}}</pre>
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <!-- CSS ================================================== -->
+  <link href="//cdn.shopify.com/s/files/1/0108/7370/0415/t/8/assets/frame.scss.css?v=9238295642525314464"
+    rel="stylesheet" type="text/css" media="all">
+</head>
 
-      <hr/>
-      <h2>User</h2>
-      <pre>{{user|e}}</pre>
+<body>
+  <div class="jumbotron text-center">
+    <h1>Welcome {{user.email}}!</h1>
+  </div>
 
-      <hr/>
-      <h2>Store</h2>
-      <pre>{{store|e}}</pre>
+  <hr />
+  <h2>Client ID</h2>
+  <pre>{{client_id}}</pre>
 
-      <hr/>
-      <h2>CURL</h2>
-      <pre>
+  <hr />
+  <h2>User</h2>
+  <pre>{{user|e}}</pre>
+
+  <hr />
+  <h2>Store</h2>
+  <pre>{{store|e}}</pre>
+
+  <hr />
+  <h2>CURL</h2>
+  <pre>
         curl -XGET -v -H 'Accept: application/json'
                       -H 'X-Auth-Client: {{client_id}}'
                       -H 'X-Auth-Token: {{store.access_token}}'
                       https://{{api_url}}/stores/{{store.store_hash}}/v2/products
       </pre>
 
-      <hr/>
-      <h2>Products</h2>
-      <ul>
-        {% for p in products %}
-          <li>{{ p.name }} &mdash; {{ p.price }}</li>
-        {% endfor %}
-      </ul>
+  <hr />
+  <h2>Products</h2>
+  <ul class="grid__item">
+    {% for p in products %}
+    <a href="{{url_for('cart_customizer',productid=p.id)}}">
+      <li
+        class="grid__item item-row  wide--one-sixth post-large--one-sixth large--one-quarter medium--one-half small--grid-item six_ppr  medium--one-half small--one-half ">
+        <div class="products product-hover-9">
+          <div class="product-container">
+            <div class="grid-link">
+              <div class="ImageOverlayCa"></div>
+              <img src="{{ p.primary_image.standard_url }}" class="featured-image" alt="Coriander">
+            </div>
+          </div>
+          <div class="product-detail">
+            <div class="grid-link__title ">{{ p.name }}</div>
+            <div class="product_price">
+              <div class="grid-link__org_price" id="ProductPrice">
+                <span class="money" data-currency-usd="${{ p.price }}">{{ p.price }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+    </a>
+    {% endfor %}
+  </ul>
 
-      <hr/>
-      <h2>Scopes</h2>
-      <ul>
-        {{ store.scope }}
-      </ul>
-    </body>
+  <hr />
+  <h2>Customers</h2>
+  <ul>
+    {% for c in customers %}
+    <li>{{ c.id }} &mdash; {{ c.first_name }} &mdash; {{ c.email}}</li>
+    {% endfor %}
+  </ul>
+
+  <hr />
+  <h2>Orders</h2>
+  <ul>
+    {% for o in orders %}
+    <li>{{ o.id }} from {{ o.billing_address.city }} &mdash; {{o.payment_method}} &mdash; {{o.status}} &mdash;
+      {{o.total_inc_tax}}</li>
+    {% endfor %}
+  </ul>
+
+  <hr />
+  <h2>Scopes</h2>
+  <ul>
+    {{ store.scope }}
+  </ul>
+
+
+</body>
+
 </html>
