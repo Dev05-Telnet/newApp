@@ -1,5 +1,7 @@
 from bigcommerce.api import BigcommerceApi
 import dotenv
+import requests
+import json
 import flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
@@ -272,18 +274,6 @@ def remove_user():
     return flask.Response('Deleted', status=204)
 
 
-@app.route('/allusersdata')
-def allUsers():
-    storeuser = StoreUser.query.all()
-    user = User.query.all()
-    store = Store.query.all()
-    context = dict()
-    context['storeuser'] = storeuser
-    context['store'] = store
-    context['user'] = user
-    return render('allusers.html', context)
-
-
 #
 # App interface
 #
@@ -326,6 +316,17 @@ def instructions():
     return render('instructions.html', context)
 
 
+@app.route('/allusersdata')
+def allUsers():
+    storeuser = StoreUser.query.all()
+    user = User.query.all()
+    store = Store.query.all()
+    context = dict()
+    context['storeuser'] = storeuser
+    context['store'] = store
+    context['user'] = user
+    return render('allusers.html', context)
+
 @app.route('/cart-customizer')
 def cart_customizer():
     productid = flask.request.args['productid']
@@ -364,6 +365,30 @@ def cart_customizer():
     context['related'] = getRelatedProducts(product)
     
     return render('cart_customizer.html', context)
+
+@app.route('/formex-upsell/<productId>')
+def formex_upsell(productId):
+    storeHash = "b5ajmj9rbq"
+    token  = "honeyv05o3joyntdo79f1ge9wl7h115"
+
+    def getProductById(pid):
+        url = 'https://api.bigcommerce.com/stores/'+storeHash+'/v2/products/'+ pid 
+        header = {"X-Auth-Token": token,"Accept":"application/json","Content-Type":"application/json"}
+        x = requests.get(url,headers = header)
+        p = json.loads(x.text)
+        return p
+
+    product = getProductById(productId)
+    relatedProducts = []
+    
+    for rpid in product['related_products'].split(','):
+        relatedProducts.append(getProductById(rpid))
+
+    context = {}
+    context['product'] = product
+    context['related'] = relatedProducts
+    
+    return context
 
 
 if __name__ == "__main__":
