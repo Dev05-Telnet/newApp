@@ -376,6 +376,23 @@ def formex_upsell(productId):
         header = {"X-Auth-Token": token,"Accept":"application/json","Content-Type":"application/json"}
         x = requests.get(url,headers = header)
         p = json.loads(x.text)
+
+        image = 'https://api.bigcommerce.com/stores/'+str(storeHash)+'/v3/catalog/products/'+str(pid)+'/images'
+        i = requests.get(image,headers = header)
+        i = json.loads(i.text)['data']
+        images = []
+        for im in i:
+            image = {}            
+
+            image['image_file']= im['image_file']
+            image['url_zoom'] = im['url_zoom']
+            image['url_standard'] = im['url_standard']
+            image['url_thumbnai'] = im['url_thumbnail']
+            image['url_tiny'] = im['url_tiny']
+
+            images.append(image)
+        p['data']['images'] = images
+
         return p['data']
 
     product = getProductById(productId)
