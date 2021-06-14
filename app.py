@@ -369,20 +369,21 @@ def cart_customizer():
 @app.route('/formex-upsell/<productId>')
 def formex_upsell(productId):
     storeHash = "b5ajmj9rbq"
-    token  = "honeyv05o3joyntdo79f1ge9wl7h115"
+    token  = "emq7atldhjtfis94d5kka9xixxvyefi"
 
     def getProductById(pid):
-        url = 'https://api.bigcommerce.com/stores/'+storeHash+'/v2/products/'+ pid 
+        url = 'https://api.bigcommerce.com/stores/'+str(storeHash)+'/v3/catalog/products/'+str(pid)
         header = {"X-Auth-Token": token,"Accept":"application/json","Content-Type":"application/json"}
         x = requests.get(url,headers = header)
         p = json.loads(x.text)
-        return p
+        return p['data']
 
     product = getProductById(productId)
     relatedProducts = []
     
-    for rpid in product['related_products'].split(','):
-        relatedProducts.append(getProductById(rpid))
+    for rpid in product['related_products']:
+        if rpid != -1:
+            relatedProducts.append(getProductById(rpid))
 
     context = {}
     context['product'] = product
