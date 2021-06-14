@@ -1,7 +1,153 @@
 <!doctype html>
 <html>
 
-<body>This is pure html page</body>
-{{product}}
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli%7CUbuntu:300,400" media="all">
+    <script src="//cdn.shopify.com/s/files/1/0253/3107/3076/t/39/assets/scripts.min.js?v=15603695518995575784"
+        defer="defer"></script>
+    <script src="https://kit.fontawesome.com/9467264e35.js" defer="defer"></script>
+    <link href="//cdn.shopify.com/s/files/1/0253/3107/3076/t/39/assets/style.css?v=7601031786033975252" rel="stylesheet"
+        type="text/css" media="all">
+</head>
+
+<body>
+    <div class="column is-12">
+        <div class="has-border-bottom has-double-padding-bottom has-double-padding-top">
+
+
+            <div class="columns is-vcentered is-mobile is-multiline is-2 is-variable">
+                <div class="column is-narrow">
+                    <div data-label="Product">
+                        <a href="">
+                            <div class="is-hidden-touch">
+                                <img alt="{{product.name}}" class="cart__product-image lazyloaded"
+                                    src="{{product.primary_image.thumbnail_url}}">
+                            </div>
+                            <div class="is-hidden-desktop">
+                                <img alt="{{product.name}}" class="cart__product-image ls-is-cached lazyloaded"
+                                    src="{{product.primary_image.thumbnail_url}}">
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="column">
+                    <a href="">
+                        <h2
+                            class="cart__product-title title has-brand-font is-size-5 is-size-7-mobile has-half-margin-bottom">
+                            {{product.name}}</h2>
+                    </a>
+                    <p class="is-size-9 is-marginless-bottom is-uppercase is-spaced">Strap: Stainless Steel Bracelet -
+                        22mm
+                        Quick Release System, incl. Deployant Clasp with Micro-Extension</p>
+                    <p class="is-size-9 is-marginless-bottom is-uppercase is-spaced">Bezel: Blue Bezel</p>
+                    <p class="is-size-9 is-marginless-bottom is-uppercase is-spaced">Dial: Blue Dial</p>
+                    <p class="is-size-9 is-marginless-bottom is-uppercase is-spaced">SKU: 2200.1.6333.100</p>
+                </div>
+                <div class="column is-12-mobile">
+                    <div class="cart__actions is-aligned-bottom columns is-mobile">
+                        <div class="column">
+                            <span data-label="Quantity">
+                                <span class="field">
+                                    <label
+                                        class="is-size-9 is-uppercase has-half-margin-bottom is-spaced">Quantity</label>
+                                    <span class="control">
+                                        <input type="number" name="updates[]"
+                                            id="updates_31980064735330:45885d9e6532dd04e866c72854afe57a"
+                                            class="input quantity cart__quantity qty" value="1"
+                                            aria-label="Item quantity">
+                                    </span>
+                                </span>
+                            </span>
+                            <a href="javascript:{}" onclick="document.getElementById('cart-form').submit();"
+                                class="update-cart is-size-9 is-underlined">Update Cart</a>
+                        </div>
+                        <div class="column">
+                            <p class="is-size-4 has-text-primary cart__product-price has-half-margin-bottom">
+                                <strong><span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_price_2"
+                                        style="display:none !important;"></span><span
+                                        class="tdf-cart-item-p-p">${{product.price}}</span></strong>
+                            </p>
+                            <a href=""
+                                class="cart__remove is-size-9 is-spaced is-underlined is-uppercase has-text-secondary">
+                                Remove
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% if related %}
+            <!-- UpSell Feature starts from here -->
+            <div class="product-upsell">
+                <div class="content">
+                    <div class="open-upsells notification has-background-tertiary">
+                        <div class="columns is-vcentered is-mobile">
+                            <div class="column">
+                                <h4
+                                    class="has-text-secondary title is-size-6 is-size-8-mobile is-marginless-bottom is-uppercase">
+                                    Customise your watch</h4>
+                                <p class="is-size-6 is-marginless-bottom">Add another strap, bracelet, or clasp</p>
+                            </div>
+                            <div class="column is-narrow">
+                                <svg class="svg-inline--fa fa-chevron-up fa-w-14 fa-2x has-text-secondary open-trigger"
+                                    aria-hidden="true" focusable="false" data-prefix="far" data-icon="chevron-up"
+                                    role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
+                                    data-fa-i2svg="">
+                                    <path fill="currentColor"
+                                        d="M6.101 359.293L25.9 379.092c4.686 4.686 12.284 4.686 16.971 0L224 198.393l181.13 180.698c4.686 4.686 12.284 4.686 16.971 0l19.799-19.799c4.686-4.686 4.686-12.284 0-16.971L232.485 132.908c-4.686-4.686-12.284-4.686-16.971 0L6.101 342.322c-4.687 4.687-4.687 12.285 0 16.971z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="upsell-products is-active">
+                        <div class="columns is-centered is-multiline is-vcentered">
+                            <div class="column is-4">
+                                <div class="combo-container has-text-centered">
+                                    <img src="{{product.primary_image.thumbnail_url}}" alt=""
+                                        class="cart__product-image ls-is-cached lazyloaded">
+                                    <p class="item-title"></p>
+                                    <span
+                                        class="button add-upsell is-size-8 is-spaced is-bold is-uppercase is-secondary is-hidden"
+                                        data-cart-add="">Add</span>
+                                </div>
+                            </div>
+                            <div class="column">
+                                <div class="columns is-multiline">
+                                    {% for p in related %}
+                                    <div class="column is-6">
+                                        <div class="upsell-product-item" data-upsell="31980065980514"
+                                            data-combo="{{p.primary_image.thumbnail_url}}" data-item-title="{{p.name}}"
+                                            deployant="" clasp="" with="" fine="" adjustment=""
+                                            data-item-price="$150.00" data-id="31980065980514">
+                                            <div class="columns is-mobile">
+                                                <div class="column is-3">
+                                                    <img data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                                                        data-sizes="auto" class="lazyautosizes lazyloaded" sizes="63px"
+                                                        src="{{p.primary_image.thumbnail_url}}">
+                                                </div>
+                                                <div class="column">
+                                                    <h2
+                                                        class="cart__product-title title is-size-8 is-bold is-marginless-top is-size-9-mobile has-half-margin-bottom">
+                                                        {{p.name}}</h2>
+                                                    <p
+                                                        class="product-price is-size-7 has-secondary-font is-marginless-bottom">
+                                                        <strong>${{p.price}}</strong>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
 
 </html>

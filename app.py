@@ -341,12 +341,28 @@ def cart_customizer():
                             store_hash=store.store_hash,
                             access_token=store.access_token)
 
-    products = client.Products.all()
-    products = client.Products.id(112)
-    product = client.Products.get_by_id(product_id=productid)
+    products = client.Products.iterall()
     
+    def getProductById(pid):
+        for p in products:
+            if pid == str(p.id):
+                return p
+
+    def getRelatedProducts(product):
+        relatedProducts = []
+        if product.related_products == '-1': 
+            return relatedProducts
+        else:
+            relatedIds = product.related_products.split(',')
+            for rId in relatedIds :
+                relatedProducts.append(getProductById(rId))
+            return relatedProducts
+
+    product = getProductById(productid)
     context = dict()
     context['product'] = product
+    context['related'] = getRelatedProducts(product)
+    
     return render('cart_customizer.html', context)
 
 
